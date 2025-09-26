@@ -5,7 +5,7 @@ MQTT_BROKER = "mqtt-broker"
 MQTT_PORT = 1883
 MQTT_TOPIC = "ping-pong"
 
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 
 while True:
     try:

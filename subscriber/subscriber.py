@@ -5,14 +5,14 @@ MQTT_BROKER = "mqtt-broker"
 MQTT_PORT = 1883
 MQTT_TOPIC = "ping-pong"
 
-def on_connect(client, userdata, flags, rc):
-    print(f"Connected with result code {rc})")
+def on_connect(client, userdata, flags, reason_code, properties):
+    print(f"Connected with result code {reason_code}")
     client.subscribe(MQTT_TOPIC)
 
 def on_message(client, userdata, msg):
     print(f"Received: {msg.payload.decode()}")
 
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_message = on_message
 
