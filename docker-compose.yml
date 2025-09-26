@@ -27,3 +27,9 @@ services:
       - "8000:8000"
     depends_on:
       - mqtt-broker
+
+  static-module:
+    build:
+      context: ./static_module
+    depends_on:
+      - mqtt-broker
