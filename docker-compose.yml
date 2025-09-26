@@ -8,18 +8,6 @@ services:
     volumes:
       - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
-#  publisher:
-#    build:
-#      context: ./publisher
-#    depends_on:
-#      - mqtt-broker
-#
-#  subscriber:
-#    build:
-#      context: ./subscriber
-#    depends_on:
-#      - mqtt-broker
-
   mcp-server:
     build:
       context: ./mcp_server

@@ -51,4 +51,4 @@ We will approach this goal in a series of small, verifiable steps.
 
 5.  **Step 5: Integration and Refinement.**
     -   Refactor the existing `publisher` and `subscriber` applications to function as modules within this new architecture.
-    -   Flesh out the command-and-control message format (e.g., including correlation IDs for results).
+    -   Flesh out the command-and-control message format. This has been implemented to include correlation IDs, enabling a full request-response cycle between the MCP server and the modules.
