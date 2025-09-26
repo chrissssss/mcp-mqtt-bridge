@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "-u", "static_module.py"]
+CMD ["python", "-u", "hello_module.py"]
