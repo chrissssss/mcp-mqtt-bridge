@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "docker_mqtt_bridge": {
+      "url": "http://localhost:8000/mcp",
+      "description": "Connects to the MCP server running in Docker."
+    }
+  }
+}

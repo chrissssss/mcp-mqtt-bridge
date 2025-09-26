@@ -10,18 +10,20 @@ services:
 
   publisher:
     build:
-      context: .
-      dockerfile: publisher/Dockerfile
-    volumes:
-      - ./publisher:/app
+      context: ./publisher
     depends_on:
       - mqtt-broker
 
   subscriber:
     build:
-      context: .
-      dockerfile: subscriber/Dockerfile
-    volumes:
-      - ./subscriber:/app
+      context: ./subscriber
+    depends_on:
+      - mqtt-broker
+
+  mcp-server:
+    build:
+      context: ./mcp_server
+    ports:
+      - "8000:8000"
     depends_on:
       - mqtt-broker
