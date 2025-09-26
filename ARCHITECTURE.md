@@ -55,5 +55,5 @@ We will approach this goal in a series of small, verifiable steps.
 
 5.  **Step 5: Integration and Refinement.**
     -   **Status: Completed**
-    -   Refactor the existing `publisher` and `subscriber` applications to function as modules within this new architecture.
+    -   Refactor the initial proof-of-concept modules into the `hello-module` application, which serves as a clear example of a module within this architecture.
     -   Flesh out the command-and-control message format. This has been implemented to include correlation IDs, enabling a full request-response cycle between the MCP server and the modules.
