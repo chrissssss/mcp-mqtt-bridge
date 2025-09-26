@@ -22,3 +22,12 @@ services:
     depends_on:
       - mqtt-broker
       - mcp-server
+
+  todoist-module:
+    build:
+      context: ./todoist_module
+    depends_on:
+      - mqtt-broker
+      - mcp-server
+    environment:
+      - TODOIST_API_KEY=${TODOIST_API_KEY}
