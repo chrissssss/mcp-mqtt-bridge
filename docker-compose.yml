@@ -16,8 +16,9 @@ services:
     depends_on:
       - mqtt-broker
 
-  static-module:
+  hello-module:
     build:
-      context: ./static_module
+      context: ./hello_module
     depends_on:
       - mqtt-broker
+      - mcp-server
