@@ -57,3 +57,10 @@ We will approach this goal in a series of small, verifiable steps.
     -   **Status: Completed**
     -   Refactor the initial proof-of-concept modules into the `hello-module` application, which serves as a clear example of a module within this architecture.
     -   Flesh out the command-and-control message format. This has been implemented to include correlation IDs, enabling a full request-response cycle between the MCP server and the modules.
+
+6.  **Step 6: Integrate Todoist Module.**
+    -   **Status: To-Do**
+    -   Create a new `todoist-module` that integrates with the Todoist API.
+    -   The module will require a user-provided API token for authentication. The initial implementation will support a single, statically configured user account.
+    -   It will register tools with the MCP server for productivity, such as `add_task` (to create new tasks) and `list_tasks` (to retrieve tasks, with support for filtering).
+    -   This step will demonstrate the extensibility of the architecture by adding a real-world, productivity-enhancing tool.
