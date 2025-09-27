@@ -54,6 +54,7 @@ This will start the following services:
 *   `hello-module`: A sample module that provides a "hello" tool.
 
 ## Usage
+To run the tests, use `pytest` command.
 
 Once the application is running, you can interact with the MCP server. The server exposes the available tools, which are dynamically registered by the modules.
 

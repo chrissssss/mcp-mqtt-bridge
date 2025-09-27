@@ -15,26 +15,23 @@ RESULT_TOPIC = "mcp/results/hello"
 
 def on_connect(client, userdata, flags, reason_code, properties):
     """Callback for when the client connects to the broker."""
-    if reason_code.is_failure:
-        logging.error(f"MQTT failed to connect: {reason_code}")
-        return
-    
-    logging.info("MQTT client connected successfully.")
-    
-    logging.info(f"Subscribing to command topic: {COMMAND_TOPIC}")
-    client.subscribe(COMMAND_TOPIC)
+    if reason_code == 0:
+        logging.info("MQTT client connected successfully.")
+        
+        logging.info(f"Subscribing to command topic: {COMMAND_TOPIC}")
+        client.subscribe(COMMAND_TOPIC)
 
-    tool_def = {
-        "name": "hello",
-        "description": "Responds with a 'Hello World' message and the current time.",
-        "parameters": [
-            {"name": "name", "type": "str", "default": "World"}
-        ]
-    }
-    payload = json.dumps(tool_def)
-    logging.info(f"Publishing tool definition to '{REGISTRATION_TOPIC}': {payload}")
-    client.publish(REGISTRATION_TOPIC, payload, retain=True)
-    logging.info("Tool definition published.")
+        tool_def = {
+            "name": "hello",
+            "description": "Responds with a 'Hello World' message and the current time.",
+            "parameters": [
+                {"name": "name", "type": "str", "default": "World"}
+            ]
+        }
+        payload = json.dumps(tool_def)
+        logging.info(f"Publishing tool definition to '{REGISTRATION_TOPIC}': {payload}")
+        client.publish(REGISTRATION_TOPIC, payload, retain=True)
+        logging.info("Tool definition published.")
 
 def on_message(client, userdata, msg):
     """Callback for when a command message is received from the broker."""

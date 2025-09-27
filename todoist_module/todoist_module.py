@@ -1,7 +1,7 @@
-import os
+import logging
 import paho.mqtt.client as mqtt
 import json
-import logging
+import os
 from todoist_api_python.api import TodoistAPI
 
 # Configure logging
@@ -40,23 +40,20 @@ LIST_TASKS_TOOL = {
 
 def on_connect(client, userdata, flags, reason_code, properties):
     """Callback for when the client connects to the broker."""
-    if reason_code.is_failure:
-        logging.error(f"MQTT failed to connect: {reason_code}")
-        return
-    
-    logging.info("MQTT client connected successfully.")
-    
-    # Subscribe to command topics
-    client.subscribe(ADD_TASK_COMMAND_TOPIC)
-    logging.info(f"Subscribed to command topic: {ADD_TASK_COMMAND_TOPIC}")
-    client.subscribe(LIST_TASKS_COMMAND_TOPIC)
-    logging.info(f"Subscribed to command topic: {LIST_TASKS_COMMAND_TOPIC}")
+    if reason_code == 0:
+        logging.info("MQTT client connected successfully.")
+        
+        # Subscribe to command topics
+        client.subscribe(ADD_TASK_COMMAND_TOPIC)
+        logging.info(f"Subscribed to command topic: {ADD_TASK_COMMAND_TOPIC}")
+        client.subscribe(LIST_TASKS_COMMAND_TOPIC)
+        logging.info(f"Subscribed to command topic: {LIST_TASKS_COMMAND_TOPIC}")
 
-    # Register tools
-    client.publish(REGISTRATION_TOPIC, json.dumps(ADD_TASK_TOOL), retain=True)
-    logging.info(f"Published tool definition for 'add_task' to '{REGISTRATION_TOPIC}'")
-    client.publish(REGISTRATION_TOPIC, json.dumps(LIST_TASKS_TOOL), retain=True)
-    logging.info(f"Published tool definition for 'list_tasks' to '{REGISTRATION_TOPIC}'")
+        # Register tools
+        client.publish(REGISTRATION_TOPIC, json.dumps(ADD_TASK_TOOL), retain=True)
+        logging.info(f"Published tool definition for 'add_task' to '{REGISTRATION_TOPIC}'")
+        client.publish(REGISTRATION_TOPIC, json.dumps(LIST_TASKS_TOOL), retain=True)
+        logging.info(f"Published tool definition for 'list_tasks' to '{REGISTRATION_TOPIC}'")
 
 def on_message(client, userdata, msg):
     """Callback for when a command message is received."""
@@ -65,7 +62,7 @@ def on_message(client, userdata, msg):
         command_data = json.loads(msg.payload)
         correlation_id = command_data.get("correlation_id")
         params = command_data.get("params", {})
-
+        
         if not correlation_id:
             logging.warning("Received command without a correlation_id. Ignoring.")
             return
@@ -105,15 +102,6 @@ def on_message(client, userdata, msg):
         logging.error(f"Failed to decode command JSON: {msg.payload.decode()}")
     except Exception as e:
         logging.error(f"An error occurred in on_message: {e}")
-        # Optionally, publish an error response
-        if correlation_id and result_topic:
-            error_message = f"Error: {str(e)}"
-            error_response = {
-                "correlation_id": correlation_id,
-                "result": error_message
-            }
-            client.publish(result_topic, json.dumps(error_response))
-
 
 def main():
     """Main function to connect to MQTT and listen for commands."""
