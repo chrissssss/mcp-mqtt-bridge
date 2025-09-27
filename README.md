@@ -32,6 +32,22 @@ For a more detailed explanation of the architecture, please see [ARCHITECTURE.md
     docker-compose up -d
     ```
 
+**Devcontainer environment configuration**
+
+Create a devcontainer environment file by copying the sample:
+
+```sh
+cp .devcontainer/devcontainer.env.sample .devcontainer/devcontainer.env
+```
+
+Edit `.devcontainer/devcontainer.env` and replace the placeholder with your actual Todoist API token.
+
+The file is ignored by Git (listed in `.gitignore`). Rebuild the containers to apply the changes:
+
+```sh
+docker-compose up -d --build
+```
+
 This will start the following services:
 *   `mqtt-broker`: The Mosquitto MQTT broker.
 *   `mcp-server`: The MCP server.
@@ -42,6 +58,23 @@ This will start the following services:
 Once the application is running, you can interact with the MCP server. The server exposes the available tools, which are dynamically registered by the modules.
 
 For example, the `hello-module` registers a `hello` tool. You can call this tool by sending a request to the MCP server's endpoint.
+
+### Todoist Module
+
+The `todoist-module` provides two MCP tools:
+
+* **add_task** – creates a new task in your Todoist account. Parameters: `content` (string) – the task description.
+* **list_tasks** – lists all active tasks. No parameters.
+
+Example usage:
+
+```sh
+curl -X POST http://localhost:8000/mcp \
+  -H "Content-Type: application/json" \
+  -d '{"tool": "add_task", "params": {"content": "Buy milk"}}'
+```
+
+The response will contain the task ID and the content if successful.
 
 ## Contributing
 
