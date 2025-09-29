@@ -2,6 +2,8 @@
 
 This project implements a bridge between the Model Context Protocol (MCP) and MQTT. It allows external clients (e.g., LLM UIs) to interact with a set of tools that are dynamically discovered and exposed by the MCP server. The core business logic resides in independent modules that communicate with the MCP server via an MQTT broker.
 
+Current verdict is, while it is a nice idea to automatically plug together custom agents, for now the fastmcp mechanism of server composition, especially mounting, looks more promising. Maybe the mount can also be automatically done so that the custom mcp does not need to be known by the owning mcp server but is been setup by a registration call. that way it should be easy to aggregate MCP tools by modules plugging in.
+
 ## Architecture
 
 The system consists of three main components:
